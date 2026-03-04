@@ -1,83 +1,102 @@
-# Modern Todo App
+# Todo-Rest-API: Containerized Backend
 
-A full-stack task management application built with **Node.js**, **Express**, and **SQLite**.  
-This project features custom JWT authentication and a responsive frontend for managing personal productivity.
+Enterprise-Grade Task Management Service
 
-## Features
+A robust, type-safe REST API built to demonstrate the integration of Node.js, Prisma, and PostgreSQL within a fully containerized environment. This project focuses on secure authentication (JWT) and a "Docker-first" development lifecycle.
 
-- **Secure Authentication:** User registration and login using `bcryptjs` for password hashing and `jsonwebtoken` (JWT) for stateless session management.
-- **Custom Middleware:** Protected routes via a custom `authMiddleware` that verifies tokens before allowing access to user data.
-- **CRUD Operations:** Full ability to Create, Read, Update, and Delete tasks tied to a specific user ID.
-- **Database Integration:** Utilizes `node:sqlite` for high-performance, synchronized database operations.
-- **Persistent Storage:** Designed to move from in-memory testing to persistent `.db` file storage.
+## 🏗 Architecture & Design
 
-## Tech Stack
+- **Layered Architecture**: Separates concerns into Routes, Controllers, and Database logic.
+- **Stateless Auth**: Uses JSON Web Tokens (JWT) for secure, scalable session management.
+- **Database Resilience**: Leverages Prisma's auto-generated client and type safety to prevent runtime database errors.
+- **Infrastructure as Code**: Uses Docker Compose to manage multi-container networking and persistent data volumes.
 
-- **Backend:** Node.js, Express.js
-- **Database:** SQLite (via `node:sqlite`)
-- **Security:** JSON Web Tokens (JWT), Bcrypt.js
-- **Frontend:** Vanilla HTML5, CSS3, JavaScript (Fetch API)
+## 🛠 Tech Stack
 
-## Project Structure
+- **Runtime**: Node.js v24 (Alpine)
+- **Framework**: Express.js
+- **ORM**: Prisma 7.x
+- **Database**: PostgreSQL 13
+- **Security**: JWT & Bcrypt
+- **DevOps**: Docker / Docker Compose
+
+## 🚀 Getting Started
+
+### 1. Environment Configuration
+
+Create a `.env` file in the root directory:
+
+```env
+PORT=8000
+DATABASE_URL="postgresql://postgres:postgres@db:5432/todoapp"
+JWT_SECRET="your_secure_random_string"
+NODE_ENV="development"
+```
+
+### 2. Deployment with Docker
+
+This project is optimized for Docker. To build and start all services:
+
+```bash
+# Wipe old artifacts and start fresh
+docker compose down -v
+docker compose up --build
+```
+
+### 3. Initialize Database (Migration)
+
+Run this in a separate terminal to sync your Prisma schema with the PostgreSQL container:
+
+```bash
+docker compose run app npx prisma migrate dev --name init
+```
+
+## 📡 API Documentation
+
+### Authentication
+
+- **POST /api/auth/register**  
+  Description: Creates a new user profile.  
+  Request Body: `{ "email": "user@example.com", "password": "securepassword" }`
+
+- **POST /api/auth/login**  
+  Description: Validates credentials and returns a JWT.  
+  Response: `{ "token": "eyJhbG..." }`
+
+### Tasks (Requires JWT)
+
+- **GET /api/todos**  
+  Description: Returns all tasks associated with the authenticated user.
+
+- **POST /api/todos**  
+  Description: Create a new task.  
+  Body: `{ "title": "Buy groceries", "description": "Milk and eggs" }`
+
+## 📦 Project Structure
 
 ```
+todo-app_2/
+├── prisma/             # Schema definition & migration history
 ├── src/
-│   ├── middleware/
-│   │   └── authMiddleware.js  # Token verification logic
-│   ├── routes/
-│   │   ├── authRoutes.js      # Register & Login endpoints
-│   │   └── todoRoutes.js      # Task management endpoints
-│   ├── db.js                  # Database schema & initialization
-│   └── server.js              # Entry point & Express configuration
-├── public/
-│   ├── index.html             # Main frontend interface
-│   └── styles.css             # Custom styling
-└── .env                       # Environment variables (Secrets)
+│   ├── generated/      # Linux-generated Prisma Client (Docker Volume Protected)
+│   ├── routes/         # Endpoint definitions
+│   ├── controllers/    # API Business logic
+│   ├── middleware/     # JWT & Error handling
+│   ├── prismaClient.js # Global Prisma Instance
+│   └── server.js       # App entry point
+├── Dockerfile          # Multi-layer build configuration
+└── docker-compose.yaml # Orchestration for App and DB services
 ```
 
-## Installation & Setup
+## 🔧 Troubleshooting (Mac-Specific)
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/your-repo-name.git
-   cd your-repo-name
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Configure Environment Variables**
-
-   Create a `.env` file in the root directory and add:
-   ```env
-   PORT=8000
-   JWT_SECRET=your_super_secret_key_here
-   ```
-
-4. **Run the Server**
-   ```bash
-   node src/server.js
-   ```
-   The app will be available at `http://localhost:8000`.
-
-## API Endpoints
-
-### Auth
-- `POST /auth/register` – Create a new account
-- `POST /auth/login` – Authenticate and receive a JWT
-
-### Todos (Requires `Authorization` header)
-- `GET /todos` – Fetch all tasks for the logged-in user
-- `POST /todos` – Add a new task
-- `PUT /todos/:id` – Update task status (Complete/Open)
-- `DELETE /todos/:id` – Remove a task
+- **Port Conflicts**: This project uses external port 5435 for PostgreSQL to avoid conflicts with local Mac Postgres installations.
+- **Volume Masking**: The `src/generated` folder is protected with an anonymous volume to prevent Mac local files from overwriting the container-built Prisma client.
 
 ## Credits
 
-* **Frontend**: Original UI design and frontend logic by [jamezmca](https://github.com/jamezmca).
-* **Backend**: Custom Node.js/Express API and SQLite integration developed by [Ruthvik](https://github.com/ruthwikr17).
+- **Frontend**: Original UI design and frontend logic by [jamezmca](https://github.com/jamezmca).
+- **Backend**: Custom Node.js/Express API and SQLite integration developed by [Ruthvik](https://github.com/ruthwikr17).
 
 ## 📝 License
 

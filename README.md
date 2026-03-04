@@ -57,7 +57,7 @@ docker compose run app npx prisma migrate dev --name init
 
 - **POST /api/auth/register**  
   Description: Creates a new user profile.  
-  Request Body: `{ "email": "user@example.com", "password": "securepassword" }`
+  Request Body: `{ "username": "user@example.com", "password": "securepassword" }`
 
 - **POST /api/auth/login**  
   Description: Validates credentials and returns a JWT.  
@@ -70,7 +70,7 @@ docker compose run app npx prisma migrate dev --name init
 
 - **POST /api/todos**  
   Description: Create a new task.  
-  Body: `{ "title": "Buy groceries", "description": "Milk and eggs" }`
+  Body: `{ "Buy groceries" }`
 
 ## Project Structure
 

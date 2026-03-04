@@ -1,0 +1,52 @@
+### GET /
+GET http://localhost:8000
+
+
+### POST /auth/register
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+    "username": "harryjp@gmail.com",
+    "password": "ginnyp"
+}
+
+
+### POST /auth/login
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+    "username": "harryjp@gmail.com",
+    "password": "ginnyp"
+}
+
+
+### GET /todos (protected) - Fetch all todos
+GET http://localhost:8000/todos
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzcyNjI2MDUxLCJleHAiOjE3NzI3MTI0NTF9.PLtiBRsYJxjnNlIJAWUHykgRiyYY8FbzTMTKSquZpRY
+
+
+### POST /todos (protected) - Add task to todos
+POST http://localhost:8000/todos
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzcyNjI2MDUxLCJleHAiOjE3NzI3MTI0NTF9.PLtiBRsYJxjnNlIJAWUHykgRiyYY8FbzTMTKSquZpRY
+Content-Type: application/json
+
+{
+    "task": "Complete Backend tutotial video"
+}
+
+
+### PUT /todos/:id (protected) - Update task progress
+PUT http://localhost:8000/todos/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzcyNjI2MDUxLCJleHAiOjE3NzI3MTI0NTF9.PLtiBRsYJxjnNlIJAWUHykgRiyYY8FbzTMTKSquZpRY
+Content-Type: application/json
+
+{
+    "completed": 1
+}
+
+
+### DELETE /todos/:id (protected) - Delete task from todos
+DELETE http://localhost:8000/todos/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzcyNjI2MDUxLCJleHAiOjE3NzI3MTI0NTF9.PLtiBRsYJxjnNlIJAWUHykgRiyYY8FbzTMTKSquZpRY

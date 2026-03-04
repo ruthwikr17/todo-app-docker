@@ -4,14 +4,14 @@ Enterprise-Grade Task Management Service
 
 A robust, type-safe REST API built to demonstrate the integration of Node.js, Prisma, and PostgreSQL within a fully containerized environment. This project focuses on secure authentication (JWT) and a "Docker-first" development lifecycle.
 
-## 🏗 Architecture & Design
+## Architecture & Design
 
 - **Layered Architecture**: Separates concerns into Routes, Controllers, and Database logic.
 - **Stateless Auth**: Uses JSON Web Tokens (JWT) for secure, scalable session management.
 - **Database Resilience**: Leverages Prisma's auto-generated client and type safety to prevent runtime database errors.
 - **Infrastructure as Code**: Uses Docker Compose to manage multi-container networking and persistent data volumes.
 
-## 🛠 Tech Stack
+## Tech Stack
 
 - **Runtime**: Node.js v24 (Alpine)
 - **Framework**: Express.js
@@ -20,7 +20,7 @@ A robust, type-safe REST API built to demonstrate the integration of Node.js, Pr
 - **Security**: JWT & Bcrypt
 - **DevOps**: Docker / Docker Compose
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. Environment Configuration
 
@@ -51,7 +51,7 @@ Run this in a separate terminal to sync your Prisma schema with the PostgreSQL c
 docker compose run app npx prisma migrate dev --name init
 ```
 
-## 📡 API Documentation
+## API Documentation
 
 ### Authentication
 
@@ -72,7 +72,7 @@ docker compose run app npx prisma migrate dev --name init
   Description: Create a new task.  
   Body: `{ "title": "Buy groceries", "description": "Milk and eggs" }`
 
-## 📦 Project Structure
+## Project Structure
 
 ```
 todo-app_2/
@@ -88,7 +88,7 @@ todo-app_2/
 └── docker-compose.yaml # Orchestration for App and DB services
 ```
 
-## 🔧 Troubleshooting (Mac-Specific)
+## Troubleshooting (Mac-Specific)
 
 - **Port Conflicts**: This project uses external port 5435 for PostgreSQL to avoid conflicts with local Mac Postgres installations.
 - **Volume Masking**: The `src/generated` folder is protected with an anonymous volume to prevent Mac local files from overwriting the container-built Prisma client.
@@ -98,6 +98,6 @@ todo-app_2/
 - **Frontend**: Original UI design and frontend logic by [jamezmca](https://github.com/jamezmca).
 - **Backend**: Custom Node.js/Express API and SQLite integration developed by [Ruthvik](https://github.com/ruthwikr17).
 
-## 📝 License
+## License
 
 Distributed under the MIT License.

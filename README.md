@@ -51,6 +51,12 @@ Run this in a separate terminal to sync your Prisma schema with the PostgreSQL c
 docker compose run app npx prisma migrate dev --name init
 ```
 
+### 4. Run the application (through Docker)
+
+```bash
+docker compose up
+```
+
 ## API Documentation
 
 ### Authentication
